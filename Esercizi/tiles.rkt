@@ -36,18 +36,18 @@
   (lambda (length)  ; same as vale
     ; base cases
     (cond ((= length 1)
-           ; i can use both a blue or a red
+           ; I can use both a blue or a red
            2
            )
           ((= length 2)
-           ; i can use 2 blue, or one blue and one red in any order
+           ; I can use 2 blue, or one blue and one red in any order
            3
            )
           (else
            ; recursive step
            (+
-            (tiling-b (- length 1)) ; i'm using a blue tile
-            (tiling-b (- length 2)) ; i'm using a red tile, so i'm forced to use a blue next
+            (tiling-b (- length 1)) ; I'm using a blue tile
+            (tiling-b (- length 2)) ; I'm using a red tile, so I'm forced to use a blue next
             )
            )
           )
@@ -56,3 +56,32 @@
 ;; test
 
 (tiling-b 11) ; 233
+
+; Problem 3:
+; Now we have again a tile 1*1 and a tile 2*1. We don't want the rectangular tiles to touch each other.
+; How many way we can tile a wall of length n?
+
+(define tiling-c    ; val: integer non-negative number
+  (lambda (length)  ; same as val
+    ; base cases
+    (cond ((< length 0)
+           1
+           )
+          ((<= length 1)
+           1
+           )
+          (else
+           ; recursive step
+           (+
+            (tiling-c (- length 1)) ; if I use a square tile, I can go on as I wish
+            (tiling-c (- length 3)) ; if I use a 2*1 tile, I'm forced to use a square tile
+            )
+           )
+          )
+    ))
+
+;; test
+(tiling-c 4) ; 4
+(tiling-c 5) ; 6
+(tiling-c 6) ; 9
+(tiling-c 12)
