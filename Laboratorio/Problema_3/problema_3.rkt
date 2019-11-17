@@ -30,13 +30,12 @@
         ))))
 
 (define point-idx  ; val: non-negative integer (index of the first point found in str)
-  (lambda (str i)  ; str: string with a point
-                   ; i: counter, must start from 0 (pointer to current index)
+  (lambda (str)    ; str: string with a point
     ; base cases
     (if (char=? (string-ref str 0) #\.)
-        i
+        0
         ; recursive step
-        (point-idx (substring str 1) (add1 i))
+        (add1 (point-idx (substring str 1)))
         )
     ))
 
@@ -61,8 +60,8 @@
   (lambda (bin)          ; bin: binary digits string possibly with floating point
     ; handle floating point
     (if (contains-point? bin)
-        (let ((integer-part (substring bin 0 (point-idx bin 0)))
-              (float-part (substring bin (+ (point-idx bin 0) 1)))
+        (let ((integer-part (substring bin 0 (point-idx bin)))
+              (float-part (substring bin (+ (point-idx bin) 1)))
               )
           (+
            (bin-int->rad10 integer-part)
@@ -143,9 +142,9 @@
                           ; numeral: string representation of number in radix n with d-set's digits and possibly a floating point
     ; handle floating point
     (if (contains-point? numeral)
-        (let ((decimal-part (substring numeral (+ (point-idx numeral 0) 1))))
+        (let ((decimal-part (substring numeral (+ (point-idx numeral) 1))))
           (let ((numeral-wo-point (string-append
-                                   (substring numeral 0 (point-idx numeral 0))
+                                   (substring numeral 0 (point-idx numeral))
                                    decimal-part
                                    )
                                   )
