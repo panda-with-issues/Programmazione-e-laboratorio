@@ -9,7 +9,7 @@
   (lambda (lst)  ; lst: list
     (if (null? lst)
         0
-        (+ 1 (length* (cdr lst)))
+        (add1 (length* (cdr lst)))
         )
         ))
 ;; test
@@ -23,7 +23,7 @@
   (lambda (i lst)  ; i: number, lst: list of numbers
     (if (= i (car lst))
         0
-        (+ 1 (index-of i (cdr lst)))
+        (add1 (index-of i (cdr lst)))
         )
     ))
 

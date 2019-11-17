@@ -108,9 +108,9 @@
         ; recursive step
         (add1
          (r-digit->d-digit
-         (substring d-set 1)
-         digit
-         )
+          (substring d-set 1)
+          digit
+          )
          )
         )
     ))
