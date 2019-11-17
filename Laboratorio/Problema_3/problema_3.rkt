@@ -99,18 +99,18 @@
 ;; Generalization for radix n with an arbitrary digits set.
 ;; For exercise's sakes a different algorithm than the previous will be implemented in order to convert numerals in radix 10
 
-(define r-digit->d-digit    ; val: digit's radix 10 valor in an arbitrary digits set in radix n
-  (lambda (d-set digit i)   ; d-set: string of arbitrary digits sorted in ascending order
-                            ; digit: character contained in d-set
-                            ; i: counter, must start from 0 (pointer to current index in d-set)
+(define r-digit->d-digit  ; val: digit's radix 10 valor in an arbitrary digits set in radix n
+  (lambda (d-set digit)   ; d-set: string of arbitrary digits sorted in ascending order
+                          ; digit: character contained in d-set
     ; base case
     (if (char=? digit (string-ref d-set 0)) ; must use char type to avoid index error if string-legth is 1
-        i
+        0
         ; recursive step
-        (r-digit->d-digit
+        (add1
+         (r-digit->d-digit
          (substring d-set 1)
          digit
-         (add1 i)
+         )
          )
         )
     ))
@@ -120,7 +120,7 @@
                            ; numeral: string representation of a number in radix n with d-set's digits
     ; base case
     (if (= (string-length numeral) 1)
-        (r-digit->d-digit d-set (string-ref numeral 0) 0)
+        (r-digit->d-digit d-set (string-ref numeral 0))
         ; recursive step
         (let ((radix (string-length d-set))
               (last-d-idx (- (string-length numeral) 1))
@@ -129,7 +129,7 @@
                 (last-d (string-ref numeral last-d-idx))
                 )
             (+
-             (r-digit->d-digit d-set last-d 0)
+             (r-digit->d-digit d-set last-d)
              (* radix (integer->rad10 d-set left-part))
              )
             )
