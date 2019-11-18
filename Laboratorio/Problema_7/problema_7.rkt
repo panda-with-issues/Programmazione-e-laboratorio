@@ -31,3 +31,33 @@
         (add1 (position i (cdr lst)))
         )
     ))
+
+;; test
+(position 7 '(7 8 24 35 41))   ; 0
+(position 35 '(7 8 24 35 41))  ; 3
+(position 41 '(7 8 24 35 41))  ; 4
+
+(define sorted-ins  ; val: sorted list of integer including i and in which each number is repeated no more than once
+  (lambda (i lst)   ; i: integer, lst: sorted list of integer in which each number is repeated no more than once
+    ; base cases
+    (cond ((null? lst)
+           (cons i null)
+           )
+          ((= i (car lst))
+           lst
+           )
+          ((< i (car lst))
+           (cons i lst)
+           )
+          ; recursive step
+          (else
+           (cons (car lst) (sorted-ins i (cdr lst)))
+           )
+          )
+    ))
+
+;; test
+(sorted-ins 24 '())             ; '(24)
+(sorted-ins 5 '(7 8 24 35 41))  ; '(5 7 8 24 35 41)
+(sorted-ins 24 '(7 8 24 35 41)) ; '(7 8 24 35 41)
+(sorted-ins 27 '(7 8 24 35 41)) ; '(7 8 24 27 35 41)
