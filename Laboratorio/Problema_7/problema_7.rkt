@@ -61,3 +61,16 @@
 (sorted-ins 5 '(7 8 24 35 41))  ; '(5 7 8 24 35 41)
 (sorted-ins 24 '(7 8 24 35 41)) ; '(7 8 24 35 41)
 (sorted-ins 27 '(7 8 24 35 41)) ; '(7 8 24 27 35 41)
+
+(define sorted-list  ; val: sorted list of integer in which each number is repeated no more than once
+  (lambda (lst)      ; lst: list of integer in which each number is repeated no more than once
+    ; base case
+    (if (null? lst)
+        null
+        ; recursive step
+        (sorted-ins (car lst) (sorted-list (cdr lst)))
+        )
+    ))
+
+;; test
+(sorted-list '(35 8 41 24 7)) ; '(7 8 24 35 41)
