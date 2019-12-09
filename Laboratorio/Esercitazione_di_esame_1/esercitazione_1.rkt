@@ -148,4 +148,26 @@
 (r-val ".1")   ; 0.5
 (r-val ".011") ; 0.375
 
+;; task 7
 
+(define shared
+  (lambda (u v)
+    (cond
+      ((or (null? u) (null? v))
+        null
+        )
+      ((= (car u) (car v))
+       (cons (car u) (shared (cdr u) (cdr v)))
+       )
+      ((< (car u) (car v))
+       (shared (cdr u) v)
+       )
+      (else
+       (shared u (cdr v))
+       )
+      )
+    ))
+
+;; test
+
+(shared '(1 3 5 6 7 8 9 10) '(0 1 2 3 4 5 7 9)) ; (1 3 5 7 9)
