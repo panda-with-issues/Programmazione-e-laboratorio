@@ -129,3 +129,23 @@
 ;; test
 
 (av '(0 0 -1 -1 1 0 0 1 0)) ; (0 -1 -1 0 1 0 1 1)
+
+;; task 6
+
+(define r-val
+  (lambda (numeral)
+    (if (string=? numeral ".")
+        0
+        (let ((last-idx (sub1 (string-length numeral))))
+          (+ (* (string->number (substring numeral last-idx)) (expt 2 (- last-idx)))
+             (r-val (substring numeral 0 last-idx)))
+          )
+        )
+    ))
+
+;; test
+
+(r-val ".1")   ; 0.5
+(r-val ".011") ; 0.375
+
+
