@@ -171,3 +171,42 @@
 ;; test
 
 (shared '(1 3 5 6 7 8 9 10) '(0 1 2 3 4 5 7 9)) ; (1 3 5 7 9)
+
+;; task 8
+
+(define 1-counter
+  (lambda (str)
+    (if (zero? (string-length str))
+        0
+        (+ (string->number (substring str 0 1))
+           (1-counter (substring str 1))
+           )
+        )
+    ))
+
+(define parity-check-rec
+  (lambda (lst i)
+    (cond
+      ((null? lst)
+       null
+       )
+      ((odd? (1-counter (car lst)))
+       (cons i (parity-check-rec (cdr lst) (add1 i)))
+       )
+      (else
+       (parity-check-rec (cdr lst) (add1 i))
+       )
+      )
+    ))
+
+(define parity-check-failures
+  (lambda (lst)
+    (parity-check-rec lst 0)
+    ))
+
+;; test
+
+(parity-check-failures '("0111" "1001" "0000" "1010")) ; '(0)
+(parity-check-failures '("0110" "1101" "0000" "1011")) ; '(1 3)
+(parity-check-failures '("0111" "1011" "0100" "1110")) ; '(0 1 2 3)
+(parity-check-failures '("0110" "1001" "0000" "1010")) ; '()
