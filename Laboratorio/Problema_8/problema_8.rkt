@@ -21,48 +21,45 @@
 
 ;; task 1
 
-(define locate-bigger
-  (lambda (n k s d t s-num d-num t-num)
-    (let ((half-- (expt 2 (- n 2)))
-          (offset (expt 2 (sub1 n))))
+(define locate-bigger                    ; val: list of couples of integers, first number representing the peg and second representing number of disks in stack at a given k move
+  (lambda (n k s d t s-num d-num t-num)  ; n: disks numbe
+                                         ; k: move number
+                                         ; s, d, t: source, destination, transition pegs
+                                         ; s-num, d-num, t-num: disks number on s, d, t
+    (let ((half (expt 2 (sub1 n))))
       (cond
         ; base case
-        ((= n 1)
-         (if (<= k 0)
-             (list (list s (add1 s-num)) (list d d-num) (list t t-num))
-             (list (list s s-num) (list d (add1 d-num)) (list t t-num))
-             )
+        ((zero? n)
+         (list (list s s-num) (list d d-num) (list t t-num))
          )
-        ; k is smaller than n-1 tower's middle move
-        ((<= k half--)
+        ; recursive steps:
+        ; case 1: bigger disk is still on s, we must move n-1 tower from s to t
+        ((< k half)
          (locate-bigger (sub1 n) k s t d (add1 s-num) t-num d-num)
          )
-        ; k is smaller than middle move
-        ((< k (expt 2 (sub1 n)))
-         (locate-bigger (sub1 n) (quotient k 2) s t d (add1 s-num) t-num d-num)
-         )
+        ; case 2: bigger disk is in d, we are moving n-1 tower from t to d
         (else
-         (locate-bigger (sub1 n) (- k offset) t d s t-num (add1 d-num) s-num)
+         (locate-bigger (sub1 n) (- k half) t d s t-num (add1 d-num) s-num)
          )
         )
       )
     ))
 
-(define hanoi-disks
-  (lambda (n k)
+(define hanoi-disks                  ; val: list of couples (same as locate-bigger)
+  (lambda (n k)                      ; n: disks number, k: move number
     (locate-bigger n k 1 2 3 0 0 0)
     ))
 
 ;; test
 
-(hanoi-disks 3 0)      ;'((1 3) (3 0) (2 0)) ok
-(hanoi-disks 3 1)      ;'((3 0) (2 1) (1 2)) ok
-(hanoi-disks 3 2)      ;'((2 1) (1 1) (3 1)) ok
-(hanoi-disks 3 3)      ;'((1 1) (3 2) (2 0)) non ok
-(hanoi-disks 3 4)      ;'((3 2) (2 1) (1 0)) non ok
-(hanoi-disks 3 5)      ;'((2 1) (1 1) (3 1)) non ok
-(hanoi-disks 3 6)      ;'((1 1) (3 0) (2 2)) ok
-(hanoi-disks 3 7)      ;'((3 0) (2 3) (1 0)) ok
-;(hanoi-disks 5 13)     ;'((3 2) (2 1) (1 2))
-;(hanoi-disks 15 19705) ;'((3 4) (2 9) (1 2))
-;(hanoi-disks 15 32767) ;'((3 0) (2 15) (1 0)
+(hanoi-disks 3 0)      ;'((1 3) (3 0) (2 0)) 
+(hanoi-disks 3 1)      ;'((3 0) (2 1) (1 2)) 
+(hanoi-disks 3 2)      ;'((2 1) (1 1) (3 1))
+(hanoi-disks 3 3)      ;'((1 1) (3 2) (2 0))
+(hanoi-disks 3 4)      ;'((3 2) (2 1) (1 0))
+(hanoi-disks 3 5)      ;'((2 1) (1 1) (3 1))
+(hanoi-disks 3 6)      ;'((1 1) (3 0) (2 2))
+(hanoi-disks 3 7)      ;'((3 0) (2 3) (1 0))
+(hanoi-disks 5 13)     ;'((3 2) (2 1) (1 2))
+(hanoi-disks 15 19705) ;'((3 4) (2 9) (1 2))
+(hanoi-disks 15 32767) ;'((3 0) (2 15) (1 0)
