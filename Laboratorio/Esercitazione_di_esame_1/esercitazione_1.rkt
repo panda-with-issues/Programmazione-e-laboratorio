@@ -79,5 +79,23 @@
 (lcs "ala" "palato") ; ((1 2 "a") (2 3 "l") (3 4 "a"))
 (lcs "arto" "atrio") ; ((1 1 "a") (3 2 "t") (4 5 "o"))
 
+;; task 4
 
-              
+(define cyclic-string       ; val: string
+  (lambda (pattern length)  ; pattern: string, length: non-negative integer
+    (if (zero? length)
+        (substring pattern 0 1)
+        (string-append (cyclic-string pattern (sub1 length))
+                       (string (string-ref pattern (remainder length (string-length pattern))))
+                       )
+        )
+    ))
+
+;; tests
+
+(cyclic-string "abcd" 0)  ; ""
+(cyclic-string "abcd" 1)  ; "a"
+(cyclic-string "abcd" 2)  ; "ab"
+(cyclic-string "abcd" 4)  ; "abcd"
+(cyclic-string "abcd" 5)  ; "abcda"
+(cyclic-string "abcd" 11) ; "abcdabcdabc"
