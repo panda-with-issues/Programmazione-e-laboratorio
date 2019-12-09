@@ -99,3 +99,33 @@
 (cyclic-string "abcd" 4)  ; "abcd"
 (cyclic-string "abcd" 5)  ; "abcda"
 (cyclic-string "abcd" 11) ; "abcdabcdabc"
+
+;; task 5
+
+(define av       ; val: list 
+  (lambda (lst)  ; list composed by elements in {-1, 0, 1}
+    (if (= (length lst) 1)
+        null
+        (let ((first (car lst))
+              (second (car (cdr lst)))
+              )
+          (let ((sum (+ first second)))
+            (cond
+              ((negative? sum)
+               (cons -1 (av (cdr lst)))
+               )
+              ((zero? sum)
+               (cons 0 (av (cdr lst)))
+               )
+              (else
+               (cons 1 (av (cdr lst)))
+               )
+              )
+            )
+          )
+        )
+    ))
+
+;; test
+
+(av '(0 0 -1 -1 1 0 0 1 0)) ; (0 -1 -1 0 1 0 1 1)
