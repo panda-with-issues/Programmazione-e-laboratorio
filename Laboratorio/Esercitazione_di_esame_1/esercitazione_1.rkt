@@ -210,3 +210,39 @@
 (parity-check-failures '("0110" "1101" "0000" "1011")) ; '(1 3)
 (parity-check-failures '("0111" "1011" "0100" "1110")) ; '(0 1 2 3)
 (parity-check-failures '("0110" "1001" "0000" "1010")) ; '()
+
+;; task 9
+
+(define find-min-diff
+  (lambda (couple lst)
+    (if (= 1 (length lst))
+        couple
+        (let ((a (car couple))
+              (b (car (cdr couple)))
+              (c (car lst))
+              (d (car (cdr lst)))
+              )
+          (let ((current-min (- b a))
+                (diff (- d c))
+                )
+            (if (<= current-min diff)
+                (find-min-diff couple (cdr lst))
+                (find-min-diff (list c d) (cdr lst))
+                )
+            )
+          )
+        )
+    ))
+
+(define closest-pair
+  (lambda (lst)
+    (let ((a (car lst))
+          (b (car (cdr lst)))
+          )
+      (find-min-diff (list a b) lst)
+      )
+    ))
+
+;; test
+
+(closest-pair '(0.1 0.3 0.5 0.6 0.8 1.1)) ; (0.5 0.6)
