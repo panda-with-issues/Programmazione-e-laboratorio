@@ -246,3 +246,35 @@
 ;; test
 
 (closest-pair '(0.1 0.3 0.5 0.6 0.8 1.1)) ; (0.5 0.6)
+
+;; task 10
+
+(define sorted-ins
+  (lambda (char lst)
+    (cond ((null? lst)
+          (list char)
+          )
+          ((char<? char (car lst))
+           (cons char lst)
+           )
+          ((char=? char (car lst))
+           lst
+           )
+          (else
+           (cons (car lst) (sorted-ins char (cdr lst)))
+           )
+          )
+   ))
+
+(define sorted-char-list
+  (lambda (str)
+    (if (zero? (string-length str))
+        null
+        (sorted-ins (string-ref str 0) (sorted-char-list (substring str 1)))
+        )
+    ))
+
+(sorted-char-list "")                                       ; '()
+(sorted-char-list "abc")                                    ; (#\a #\b #\c)
+(sorted-char-list "cba")                                    ; (#\a #\b #\c)
+(sorted-char-list "list of chars that occur in this text")  ; (#\space #\a #\c #\e #\f #\h #\i #\l #\n #\o #\r #\s #\t #\u #\x)
