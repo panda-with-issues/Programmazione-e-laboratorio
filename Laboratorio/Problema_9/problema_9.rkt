@@ -3,11 +3,26 @@
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname problema_9) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 ;; Task 1
 
+(define alphabet "ABCDEFGHILMNOPQRSTVX")
+
 (define caesar-cipher  ; val: letter -> letter
   (lambda (key)        ; int in [0, 19]
-    (lambda (char)     ; char
-      (let ((char-val (char->integer char)))
-        (integer->char (+ char-val key))
+    (lambda (char)     ; char in alphabet
+      (let ((i (remainder (+ (index-of char alphabet) key) 20)))
+        (string-ref alphabet i)
         )
-      )
+    )))
+
+(define index-of           ; val: int
+  (lambda (char alphabet)  ; char: char, alphabet: string
+    (if (char=? char (string-ref alphabet 0))
+        0
+        (+ 1 (index-of char (substring alphabet 1)))
+        )
+    ))
+
+(define encrypt            ; this procedure is meant for debug only
+                           ; val: char
+  (lambda (char rule)      ; char: char, rule: letter->letter
+    (rule char)
     ))
