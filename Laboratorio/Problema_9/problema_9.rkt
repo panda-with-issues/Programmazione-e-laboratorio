@@ -26,3 +26,24 @@
   (lambda (char rule)      ; char: char, rule: letter->letter
     (rule char)
     ))
+
+;; Task 2
+
+(define H
+  (lambda (f g)
+    (lambda (m n)
+      (if (= n 0)
+          (f m)
+          (g m (H f (lambda (n) (- n 1))))
+          )
+    )))
+
+(define s2
+  (lambda (u v)
+    (+ 1 v)
+    ))
+
+(define add (H (lambda (m) m) s2))
+
+; test
+(add 3 2)
