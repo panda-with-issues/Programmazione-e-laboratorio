@@ -29,28 +29,28 @@
 
 ;; Task 2
 
-(define i
- (lambda (m)
-   m))
+(define i      ; val: int
+  (lambda (m)  ; int
+    m))
 
-(define z
-  (lambda (m)
+(define z      ; val: 0
+  (lambda (m)  ; int
     0
     ))
 
-(define u
-  (lambda (m)
+(define u      ; val: 1
+  (lambda (m)  ; int
     1
     ))
 
-(define s2
-  (lambda (u v)
+(define s2       ; val: int
+  (lambda (u v)  ; u,v: int
     (+ 1 v)
     ))
 
-(define H
-  (lambda (f g)
-    (lambda (m n)
+(define H         ; val: int->int
+  (lambda (f g)   ; f, g: int->int
+    (lambda (m n) ; m, n: int
       (if (= n 0)
           (f m)
           (g m
