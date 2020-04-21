@@ -1,4 +1,5 @@
-*.pdf
+concrete_abstraction.pdf
+Programmazione e laboratorio.pdf
 *.rkt~
 \#*
 test.java
