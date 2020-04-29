@@ -85,7 +85,7 @@ public class Board {
       threatenedRanks.cons(r),
       threatenedFiles.cons(f),
       threatenedRight.cons(r - f),
-      threatenedLeft.cons(r + f),
+      threatenedLeft.cons(r + f)
     );
   }
 
