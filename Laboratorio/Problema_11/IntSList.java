@@ -140,13 +140,13 @@ public class IntSList {
   }
 
   // New helper method added for Board
-  public boolean contains(int n) {
+  public boolean includes(int n) {
     if (empty) {
       return false;
     } else if (car() == n) {
       return true;
     } else {
-      return rest.contains(n);
+      return rest.includes(n);
     }
   }
 }
