@@ -19,7 +19,7 @@ public class Board {
   private final IntSList threatenedFiles;
   private final IntSList threatenedRight; // encoded as the difference between squares coordinates
   private final IntSList threatenedLeft;  // encoded as the sum of squares coordinates
-  private String san;               // Stands for Standard Algebric Notation
+  private String san;                     // Stands for Standard Algebric Notation
   
   private static final String FILES = "_abcdefghij";
 
@@ -33,21 +33,28 @@ public class Board {
     san = "";
   }
 
-  private Board(int n, int q, IntSList r, IntSList f, IntSList rd, IntSList ld, String arr) {
+  private Board(int n, int q, IntSList r, IntSList f, IntSList rd, IntSList ld) {
     size = n;
     queens = q;
     threatenedRanks = r;
     threatenedFiles = f;
     threatenedRight = rd;
     threatenedLeft = ld;
-    san = arr;
+    san = getSan();
   }
 
-  private String getSan(int i, int j) {
-    String file = FILES.substring(j, j+1);
-    String row = String.valueOf(i);
-    String newSan = san + " " + file + row;
-    return newSan.trim(); 
+  private String getSan() {
+    String san = "";
+    IntSList ranks = threatenedRanks;
+    IntSList files = threatenedFiles;
+    while (!ranks.isNull()) {
+      String f = FILES.substring(files.car(), files.car()+1);
+      String r = String.valueOf(ranks.car());
+      san += " " + f + r + " ";
+      ranks = ranks.cdr();
+      files = files.cdr(); 
+    }
+    return san.trim();
   }
 
   public int size() {
@@ -60,10 +67,10 @@ public class Board {
 
   public boolean underAttack(int r, int f) {
     if (
-      threatenedRanks.contains(r) ||
-      threatenedFiles.contains(f) ||
-      threatenedRight.contains(r - f) ||
-      threatenedLeft.contains(r + f) 
+      threatenedRanks.includes(r) ||
+      threatenedFiles.includes(f) ||
+      threatenedRight.includes(r - f) ||
+      threatenedLeft.includes(r + f) 
     ) {
       return true;
     } else {
@@ -79,7 +86,6 @@ public class Board {
       threatenedFiles.cons(f),
       threatenedRight.cons(r - f),
       threatenedLeft.cons(r + f),
-      san = getSan(r, f)
     );
   }
 
