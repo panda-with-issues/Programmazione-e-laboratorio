@@ -10,6 +10,8 @@
  * b.addQueen(r, f)    : Board    // return a new Board with a queen placed in square <r, f>
  * b.arrangement()     : String   // return a string representation of the state of the board
  *                                // format: <size, queensOn, (ranks threatened), (files threatened), (upper-right diagonals threatened), (upper-left diagonals threatened), queens positions in SAN>
+ * Added for part 2:
+ * b.san()             : String   // return onboard queens position in standard algebric notation
  */
 
 public class Board {
@@ -110,5 +112,9 @@ public class Board {
       "\"" + san + "\""
     };
     return "<" + String.join(", ", infos) + ">";
+  }
+
+  public String san() {
+    return san;
   }
 }
