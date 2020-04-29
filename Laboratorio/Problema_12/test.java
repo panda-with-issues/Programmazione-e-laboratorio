@@ -1,3 +1,5 @@
+import queens.*;
+
 class test {
 
   private static void RenderBoardList(SList<Board> lst) {
@@ -25,6 +27,21 @@ class test {
       SList<Board> sols = Queens.complsLst(i);
       System.out.println("Requested output: " + sols);
       RenderBoardList(sols);
+    }
+
+    /*
+    * Part 2
+    * 
+    * Run `java -classpath "queens.jar:." test` to compile
+    */
+
+    for (int i = 4; i <= 6; i++) {
+      ChessboardView gui = new ChessboardView(i);
+        SList<Board> sols = Queens.complsLst(i);
+        while (!sols.isNull()) {
+          gui.setQueens(sols.car().san());
+          sols = sols.cdr();
+        }
     }
   }
 }
