@@ -10,6 +10,15 @@ class test {
       count++;
     }
   }
+
+  public static void viewBoards(SList<Board> boards) {
+    int size = boards.car().size();
+    ChessboardView gui = new ChessboardView(size);
+    while (!boards.isNull()) {
+      gui.setQueens(boards.car().san());
+      boards = boards.cdr();
+    }
+  }
   public static void main(String[] args) {
     /*
      * Part 1
@@ -36,12 +45,8 @@ class test {
     */
 
     for (int i = 4; i <= 6; i++) {
-      ChessboardView gui = new ChessboardView(i);
-        SList<Board> sols = Queens.complsLst(i);
-        while (!sols.isNull()) {
-          gui.setQueens(sols.car().san());
-          sols = sols.cdr();
-        }
+     SList<Integer> compls = Queens.complsLst(i)
+     viewBoards(compls);
     }
   }
 }
