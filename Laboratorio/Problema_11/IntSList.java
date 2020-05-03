@@ -103,7 +103,7 @@ public class IntSList {
     if (i == 0) {
       return car();
     } else {
-      return cdr().listRef(i--);
+      return cdr().listRef(i-1);
     }
   }
 
