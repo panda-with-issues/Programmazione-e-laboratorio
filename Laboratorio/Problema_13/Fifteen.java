@@ -43,7 +43,6 @@ public class Fifteen {
     tiles = arr;
   }
   
-
   public boolean isOrdered() {
     for (int i = 0; i < tiles.length; i++) {
       if (tiles[i] != i + 1) {
