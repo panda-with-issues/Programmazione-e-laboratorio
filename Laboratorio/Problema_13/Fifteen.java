@@ -6,8 +6,13 @@
  * Protocol:
  * 
  * Fifteen frame = new Fifteen(n)  // Instantiate a new puzzle frame with dimension n x n
- * frame.isOrdered  : boolean      // Return true if every tile in frame is in ascending order (that is, if the puzzle is solved)
- * frame.canMove(n) : boolean      // Return true if the tile n can be moved (that is, if it's adjacent to the gap)
+ * frame.size()
+ * frame.gap()
+ * frame.tiles()
+ * frame.isOrdered() : boolean     // Return true if every tile in frame is in ascending order (that is, if the puzzle is solved)
+ * frame.canMove(n)  : boolean     // Return true if the tile n can be moved (that is, if it's adjacent to the gap)
+ * frame.indexOf(n)
+ * frame.getAdjacentsIdx
  * frame.move(n)                   // Modify frame state moving a tile into the gap
  * (frame.toString())
  */
@@ -42,6 +47,18 @@ public class Fifteen {
     gap = n * n;
     tiles = arr;
   }
+
+  public int size() {
+    return size;
+  }
+
+  public int gap() {
+    return gap;
+  }
+
+  public int[] tiles() {
+    return tiles;
+  }
   
   public boolean isOrdered() {
     for (int i = 0; i < tiles.length; i++) {
@@ -54,16 +71,19 @@ public class Fifteen {
 
   public boolean canMove(int tile) {
     int[] adjacentsIdx = getAdjacentsIdx(tile);
-    for (int i = 0; i < adjacentsIdx.length; i++) {
-      final int adjacentIdx = adjacentsIdx[i];
-      if (tiles[adjacentIdx] == gap) {
+    return isIdxInArr(indexOf(gap), adjacentsIdx);
+  }
+
+  private boolean isIdxInArr(int idx, int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == idx) {
         return true;
       }
     }
     return false;
   }
 
-  private int indexOf(int tile) {
+  public int indexOf(int tile) {
     for (int i = 0; i < tiles.length; i++) {
       if (tiles[i] == tile) {
         return i;
@@ -73,7 +93,7 @@ public class Fifteen {
     return -1;
   }
 
-  private int[] getAdjacentsIdx(int tile) {
+  public int[] getAdjacentsIdx(int tile) {
     final int tileIdx = indexOf(tile);
     /*
      * Adjacents are returned in an array in clockwise order starting from the upper.
@@ -93,19 +113,12 @@ public class Fifteen {
     return adjacents;
   }
 
+
+
   public void move(int tile) {
-    if (canMove(tile)) {
-      int tileIdx = indexOf(tile); 
-      int[] adjacentsIdx = getAdjacentsIdx(tile);
-      for (int i = 0; i < adjacentsIdx.length; i++) {
-        final int adjacentIdx = adjacentsIdx[i];
-        if (tiles[adjacentIdx] == gap) {
-          tiles[adjacentIdx] = tile;
-          tiles[tileIdx] = gap;
-          break;
-        }
-      }
-    }
+    int tileIdx = indexOf(tile); 
+    tiles[indexOf(gap)] = tile;
+    tiles[tileIdx] = gap;
   }
 
   public String toString() {
