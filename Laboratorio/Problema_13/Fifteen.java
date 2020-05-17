@@ -5,15 +5,16 @@
  * 
  * Protocol:
  * 
- * Fifteen frame = new Fifteen(n)  // Instantiate a new puzzle frame with dimension n x n
- * frame.size()
- * frame.gap()
- * frame.tiles()
- * frame.isOrdered() : boolean     // Return true if every tile in frame is in ascending order (that is, if the puzzle is solved)
- * frame.canMove(n)  : boolean     // Return true if the tile n can be moved (that is, if it's adjacent to the gap)
- * frame.indexOf(n)
- * frame.getAdjacentsIdx
- * frame.move(n)                   // Modify frame state moving a tile into the gap
+ * Fifteen frame = new Fifteen(n)      // Instantiate a new puzzle frame with dimension n x n
+ * frame.size()             : int      // Return the dimension of a frame's edge (n)
+ * frame.gap()              : int      // Return the value mapped to gap
+ * frame.tiles()            : int[]    // Return a list with every tile in frame in the order in which they actually are
+ * frame.isOrdered()        : boolean  // Return true if every tile in frame is in ascending order (that is, if the puzzle is solved)
+ * frame.canMove(n)         : boolean  // Return true if the tile n can be moved (that is, if it's adjacent to the gap)
+ * frame.indexOf(n)         : int      // Return a tile's index in tiles
+ * frame.getAdjacentsIdx(i) : int[]    // Return an array containing the indices of adjacent tiles to a given tile, known its index.
+ *                                     // Adjacent indices are stored in clockwise order starting from the upper.
+ * frame.move(n)                       // Modify frame state moving a tile into the gap
  * (frame.toString())
  */
 
@@ -96,8 +97,7 @@ public class Fifteen {
   public int[] getAdjacentsIdx(int tile) {
     final int tileIdx = indexOf(tile);
     /*
-     * Adjacents are returned in an array in clockwise order starting from the upper.
-     * To explain my logic, i'll consider the case in which n = 4 and, where n is one dimension of the frame.
+     * To explain my logic, i'll consider the case in which n = 4, where n is one dimension of the frame.
      * The upper element index is given by idx-n and must be >= 0 (tile 5 has got an upper adjacent with idx 0).
      * The lower one is given by idx+n and must be < n^2 (16 is 12's lower tile and its index is 15 < n^2).
      * Left adjacent index is given by idx-1 if idx % n != 0, else we are on the frame's left edge and there is no left adjacent (tiles 1, 5, 9, 13 have no left adjacent).
@@ -112,8 +112,6 @@ public class Fifteen {
     int[] adjacents = new int[] {upperIdx, rightIdx, lowerIdx, leftIdx};
     return adjacents;
   }
-
-
 
   public void move(int tile) {
     int tileIdx = indexOf(tile); 
