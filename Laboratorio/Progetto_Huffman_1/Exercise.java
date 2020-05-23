@@ -11,7 +11,7 @@
 import huffman_toolkit.*;
 
 public class Exercise {
-  private static final int RANDOM_CHARS_NUM = 2370; // wc -m Huffman.java
+  private static final int RANDOM_CHARS_NUM = 3414; // wc -m Huffman.java
   private static final int CHARS = 128;
 
   public static void generateTable(String f, String path) {

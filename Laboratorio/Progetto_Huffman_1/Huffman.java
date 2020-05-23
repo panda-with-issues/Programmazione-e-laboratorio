@@ -67,7 +67,7 @@ public class Huffman {
       if (n.character() == '@') {
         return "\\@"; 
       } else if (n.character() == '\\') {
-        return "\\";
+        return "\\\\";
       } else {
         return "" + n.character();
       }
@@ -92,5 +92,45 @@ public class Huffman {
     }
     in.close();
     out.close();
+  }
+
+  public static Node restoreTree(InputTextFile in) {
+    char c = in.readChar();
+    if (c == '@') {
+      Node left = restoreTree(in);
+      Node right = restoreTree(in);
+      return new Node(left, right);
+    } else {
+      if (c == '\\') {
+        c = in.readChar();
+      }
+      return new Node(c, 0);
+    }
+  }
+
+  public static void decompress(String src, String dst) {
+    InputTextFile in = new InputTextFile(src);
+    OutputTextFile out = new OutputTextFile(dst);
+    int size = Integer.parseInt(in.readTextLine());
+    Node root = restoreTree(in);
+    String dummy = in.readTextLine(); // will be empty, need only to go to new line
+    for (int i = 0; i < size; i++) {
+      char c = restoreChar(root, in);
+      out.writeChar(c);
+    }
+    in.close();
+    out.close();
+  }
+
+  private static char restoreChar(Node n, InputTextFile in) {
+    while(!n.isLeaf()) {
+      int bit = in.readBit();
+        if (bit == 0) {
+          n = n.left();
+        } else {
+          n = n.right();
+        }
+      }
+    return n.character();
   }
 }
