@@ -119,25 +119,38 @@ public class Huffman {
      */
     // We are assuming that \n appears in src (and odds are that it will), but this method won't work if src doesn't contains any \n
     String tree = in.readTextLine() + "\n" + in.readTextLine();
+    // Now input read stream is at the beginning of the first line of encoded text, thus we must remove the dummy instruction in decompress()
     Stack<Node> s = new Stack<Node>();
     for (int i = tree.length() - 1; i >= 0; i--) {
       // we read flatten tree backward
       char c = tree.charAt(i);
-      if ((c == '@' || c == '\\') &&
-          i != 0 &&
-          tree.charAt(i-1) == '\\' &&
-          tree.charAt(i-2) != '\\') { // situation like "\\@" will mess up the algorythm
-      // check if @ or \ are characters
-      s.push(new Node(c, 0));
+      if (c == '@') {
+        // check if @ is a char
+        // i must be greater than 1 because if we have a @ char in position 1, string will be like "\@", that is there won't be a tree at all.
+        // @ is a char only if the string is like "x\@" or "\\\@"
+        if ((i > 1 && tree.charAt(i-1) == '\\' && tree.charAt(i-2) != '\\') || // case "x\@"
+            (i >= 3 && tree.substring(i-3, i) == "\\\\\\")) {                  // case "\\\@"
+          s.push(new Node(c, 0));
+        } else {
+          // @ marks a node
+          // we create this node popping the first two nodes in stack and then push this new node
+          Node l = s.pop();
+          Node r = s.pop();
+          s.push(new Node(l, r));
+        }
       } else if (c == '\\') {
-        // skip escape character
-        continue;
-      } else if (c == '@') {
-        // if c is not a char, it marks a node
-        // we create this node popping the first two nodes in stack and then push this new node
-        Node l = s.pop();
-        Node r = s.pop();
-        s.push(new Node(l, r));
+        // check if \ is character.
+        if (i > 1 &&
+            // i must be greater than 1 for the same reason of @. If \ is a char in position 1, tree will be like "\\", and this can't happen
+            tree.charAt(i-1) == '\\' &&
+            // \ is a char if the string is like "x\\"
+            tree.charAt(i-2) != '\\') {
+            // However checking only the previous char will cause unwanted behaviour in a situation like "\\\@"
+          s.push(new Node(c, 0));
+        } else {
+          // \ is an escape char
+          continue;
+        }
       } else {
         // c is a char
         // we create a leaf node and put it into stack
