@@ -1,6 +1,6 @@
 public class test {
   public static void main(String[] args) {
-    // describe toAdd()
+    // describe StringRange()
     System.out.println(Utils.stringRange(".", 10));
     System.out.println(Utils.stringRange("+-", 5));
 
