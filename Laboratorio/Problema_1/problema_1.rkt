@@ -34,7 +34,7 @@
     ))
 
 (define 3-pers      ; val: stringa, verbo coniugato alla terza persona singolare o plurale
-  (lambda (v sogg)  ; v: stringa, verbo italiano all'infinito, plur?: booleano, determina il numero della coniugazione 
+  (lambda (v sogg)  ; v: stringa, verbo italiano all'infinito, sogg: stringa, soggetto del verbo
     (let ((radice (substring v 0 (- (string-length v) 3)))
           (v-wo-re (substring v 0 (- (string-length v) 2)))
           )
