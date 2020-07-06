@@ -11,7 +11,7 @@ class test {
     // Solve problem
     for (int i = 1; i <= 10; i++) {
       System.out.print("Size " + i + ": "); // this is not formally ok but it works thanks to compiler's quirks. It's a test so I think it's ok to speed things up
-      int sols = Queens.solsNum(i);
+      int sols = Queens.numberOfSolutions(i);
       System.out.println(sols + (sols == 1 ? " solution" : " solutions"));
     }
   }
