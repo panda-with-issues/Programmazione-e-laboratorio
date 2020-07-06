@@ -65,7 +65,7 @@ public class Board {
     return queens;
   }
 
-  public boolean underAttack(int r, int f) {
+  /* public boolean underAttack(int r, int f) {
     if (
       threatenedRanks.includes(r) ||
       threatenedFiles.includes(f) ||
@@ -75,6 +75,25 @@ public class Board {
       return true;
     } else {
       return false;
+    }
+  } */
+
+  public boolean underAttack(int r, int f) {
+    return (
+      includes(threatenedRanks, r)
+      || includes(threatenedFiles, f)
+      || includes(threatenedRight, r-f)
+      || includes(threatenedLeft, r+f)
+    );
+  }
+
+  private boolean includes(IntSList lst, int n) {
+    if (lst.isNull()) {
+      return false;
+    } else if (lst.car() == n) {
+      return true;
+    } else {
+      return includes(lst.cdr(), n);
     }
   }
 
