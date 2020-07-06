@@ -24,6 +24,7 @@
             (not (char=? (string-ref btr 0) #\.))
             )
         btr
+        ; recursive step
         (normalized-btr (substring btr 1))
         )
     ))
