@@ -84,10 +84,14 @@
 (define cyclic-string       ; val: string
   (lambda (pattern length)  ; pattern: string, length: non-negative integer
     (if (zero? length)
-        (substring pattern 0 1)
-        (string-append (cyclic-string pattern (sub1 length))
-                       (string (string-ref pattern (remainder length (string-length pattern))))
-                       )
+        ""
+        (let ((fc (substring pattern 0 1))
+              (r (substring pattern 1))
+              )
+          (string-append fc
+                         (cyclic-string (string-append r fc) (sub1 length))
+                         )
+          )
         )
     ))
 
