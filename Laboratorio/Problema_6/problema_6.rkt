@@ -4,8 +4,8 @@
 ;; compiler instruction
 (set-tessellation-shift-step!)
 
-(define build-tile  ; val: image
-  (lambda (tile short-side)
+(define build-tile           ; val: image
+  (lambda (tile short-side)  ; tile: img, short-side: integer non-negative number
     (glue-tiles
      (glue-tiles
       (glue-tiles
@@ -21,17 +21,14 @@
 (define L-tessellation  ; val: image
   (lambda (short-side)  ; short-side: integer non-negative number
     ; base cases
-    (cond ((= short-side 1)
-           L-tile
+    (if (= short-side 1)
+         L-tile
+         ; recursive step
+          (build-tile
+           (L-tessellation (/ short-side 2))
+           (/ short-side 2)
            )
-          ; recursive step
-          (else
-           (build-tile
-            (L-tessellation (/ short-side 2))
-            (/ short-side 2)
-            )
-           )
-      )
+        )
     ))
 
 ;; test
