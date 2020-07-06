@@ -146,8 +146,8 @@
                          ; c: char, possible in-going carry
     (let ((a (lsd add1))
           (b (lsd add2))
-          (a_head (head add1))
-          (b_head (head add2))
+          (a-head (head add1))
+          (b-head (head add2))
           )
       ; base case
       (if (and
@@ -158,8 +158,8 @@
           ; recursive step
           (string-append
            (btr-carry-sum
-            a_head
-            b_head
+            a-head
+            b-head
             (btr-carry a b c)
             )
            (string (btr-digit-sum a b c))
