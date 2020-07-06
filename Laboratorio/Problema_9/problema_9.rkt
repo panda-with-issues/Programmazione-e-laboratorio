@@ -8,7 +8,7 @@
 (define caesar-cipher  ; val: letter -> letter
   (lambda (key)        ; int in [0, 19]
     (lambda (char)     ; char in alphabet
-      (let ((i (remainder (+ (index-of char alphabet) key) 20)))
+      (let ((i (remainder (+ (index-of char alphabet) key) (string-length alphabet))))
         (string-ref alphabet i)
         )
     )))
