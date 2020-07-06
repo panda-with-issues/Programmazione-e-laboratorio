@@ -51,11 +51,15 @@
 (define H         ; val: int->int
   (lambda (f g)   ; f, g: int->int
     (lambda (m n) ; m, n: int
+      ; e.g.: add = H(i, s2)
+      ; if n = 0 -> i(m) -> f(m) -> (f m)
+      ; else
+      ; s2(m, h(m, n-1) ->
+      ; -> (g m (h m (n-1)) -- h = H(f, g) ->
+      ; -> (g m ((H f g) m, n-1)
       (if (= n 0)
           (f m)
           (g m
-             ; (g m (add m (- n 1))
-             ; ((lambda (h) (h m (- n 1))) (H f g))
              ((H f g) m (- n 1))
              )
           )
