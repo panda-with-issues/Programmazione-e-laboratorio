@@ -5,12 +5,12 @@
   (lambda (x y z)     ; same as val, they represent the distance between starting and ending point in the three spacial vectors
     ; base cases
     (cond 
-        ; if starting and ending points are alinged in at least 2 direction of the space
+      ; if starting and ending points are alinged in at least 2 direction of the space
       ((and (= x 0)
-           (or (= y 0) (= z 0))
-           )
-        1
-        )
+            (or (= y 0) (= z 0))
+            )
+       1
+       )
       ((and (= y 0) (= z 0))
        1
        )
@@ -21,9 +21,9 @@
       (else            
         ; recursive step
         (+
-         (manhattan-3d (- x 1) y z) ; I move one step horizontally
-         (manhattan-3d x (- y 1) z) ; or I move one step vertically
-         (manhattan-3d x y (- z 1)) ; or I move one step deeply
+         (manhattan-3d (- x 1) y z) ; move one step horizontally
+         (manhattan-3d x (- y 1) z) ; or move one step vertically
+         (manhattan-3d x y (- z 1)) ; or move one step deeply
          )
         )
      )
