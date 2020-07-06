@@ -26,11 +26,10 @@ public class Exercises {
    * 2: Write a procedure that, given a string of bits, returns a string with the 1's complement
    */
   public static String onesComplement(String bin) {
-    int i = bin.length();
-    if (i == 0) {
+    if (bin.equals("")) {
       return "";
     } else {
-      return onesComplement(bin.substring(0, i-1)) + (bin.charAt(i-1) == '0' ? "1" : "0");
+      return onesComplement(bin.substring(0, bin.length()-1)) + (bin.charAt(bin.length()-1) == '0' ? "1" : "0");
     }
   }
 
