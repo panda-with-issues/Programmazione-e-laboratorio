@@ -60,8 +60,8 @@ public class Board {
     SList<Integer> ranks = threatenedRanks;
     SList<Integer> files = threatenedFiles;
     while (!ranks.isNull()) {
-      String f = FILES.substring(files.car(), files.car()+1);
-      String r = String.valueOf(ranks.car());
+      char f = FILES.charAt(files.car());
+      int r = ranks.car();
       san += " " + f + r + " ";
       ranks = ranks.cdr();
       files = files.cdr(); 
