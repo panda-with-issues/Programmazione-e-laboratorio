@@ -107,7 +107,7 @@
 ;; task 5
 
 (define av       ; val: list 
-  (lambda (lst)  ; list composed by elements in {-1, 0, 1}
+  (lambda (lst)  ; non-empty list composed by elements in {-1, 0, 1}
     (if (= (length lst) 1)
         null
         (let ((first (car lst))
@@ -136,8 +136,8 @@
 
 ;; task 6
 
-(define r-val
-  (lambda (numeral)
+(define r-val        ; val: rational number in [0,1[ in radix 10
+  (lambda (numeral)  ; numeral: string starting with "." and composed by nums in {0, 1}
     (if (string=? numeral ".")
         0
         (let ((last-idx (sub1 (string-length numeral))))
@@ -154,8 +154,8 @@
 
 ;; task 7
 
-(define shared
-  (lambda (u v)
+(define shared   ; val: integers list composed by common elements in u, v
+  (lambda (u v)  ; u, v: sorted integers lists
     (cond
       ((or (null? u) (null? v))
         null
@@ -178,8 +178,8 @@
 
 ;; task 8
 
-(define 1-counter
-  (lambda (str)
+(define 1-counter  ; val: non-negative integer, sum of str digits
+  (lambda (str)    ; str: string composed by numbers in {0, 1}
     (if (zero? (string-length str))
         0
         (+ (string->number (substring str 0 1))
@@ -188,8 +188,8 @@
         )
     ))
 
-(define parity-check-rec
-  (lambda (lst i)
+(define parity-check-rec  ; val: list of integers
+  (lambda (lst i)         ; lst: list of strings composed by number in {0, 1}, i: non negative integer, counter
     (cond
       ((null? lst)
        null
@@ -203,8 +203,8 @@
       )
     ))
 
-(define parity-check-failures
-  (lambda (lst)
+(define parity-check-failures  ; val: list of integers
+  (lambda (lst)                ; lst: list of strings composed by number in {0, 1}
     (parity-check-rec lst 0)
     ))
 
@@ -217,8 +217,8 @@
 
 ;; task 9
 
-(define find-min-diff
-  (lambda (couple lst)
+(define find-min-diff   ; val: list of two numbers
+  (lambda (couple lst)  ; couple: sorted list of two numbers, lst: sorted list of numbers
     (if (= 1 (length lst))
         couple
         (let ((a (car couple))
@@ -238,8 +238,8 @@
         )
     ))
 
-(define closest-pair
-  (lambda (lst)
+(define closest-pair  ; val: list of two numbers
+  (lambda (lst)       ; lst: sorted list of numbers
     (let ((a (car lst))
           (b (car (cdr lst)))
           )
@@ -253,8 +253,8 @@
 
 ;; task 10
 
-(define sorted-ins
-  (lambda (char lst)
+(define sorted-ins    ; val: sorted list of characters
+  (lambda (char lst)  ; char: character, lst: list of characters
     (cond ((null? lst)
           (list char)
           )
@@ -270,8 +270,8 @@
           )
    ))
 
-(define sorted-char-list
-  (lambda (str)
+(define sorted-char-list  ; val: sorted list of characters
+  (lambda (str)           ; str: text string
     (if (zero? (string-length str))
         null
         (sorted-ins (string-ref str 0) (sorted-char-list (substring str 1)))
