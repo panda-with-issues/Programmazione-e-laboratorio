@@ -78,16 +78,12 @@ public class Board {
   }
 
   public boolean underAttack(int r, int f) {
-    if (
-      includes(threatenedRanks, r) ||
-      includes(threatenedFiles, f) ||
-      includes(threatenedRight, r - f) ||
-      includes(threatenedLeft, r + f) 
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return (
+      includes(threatenedRanks, r)
+      || includes(threatenedFiles, f)
+      || includes(threatenedRight, r - f)
+      || includes(threatenedLeft, r + f) 
+    );
   }
 
   public Board addQueen(int r, int f) {
