@@ -30,13 +30,13 @@ public class StringSList {
   private final String first;
   private final StringSList rest;
 
-  public StringSList () {
+  public StringSList() {
     empty = true;
     first = null;
     rest = null;
   }
 
-  public StringSList (String str, StringSList lst) {
+  public StringSList(String str, StringSList lst) {
     empty = false;
     first = str;
     rest = lst;
