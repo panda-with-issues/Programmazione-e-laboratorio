@@ -17,18 +17,15 @@
         )
     ))
 
-(define normalized-btr  ; val: a btr representation stripped by initial "."
-  (lambda (btr)         ; btr: string composed by chars in [+, ., -] possibly with initial "."
+(define normalized-btr  ; val: a btr representation stripped of any initial #\. char
+  (lambda (btr)         ; btr: string composed by chars in [+, ., -]
     ; base cases
-    (cond ((string=? btr ".")
-           btr)
-          ((not (char=? (string-ref btr 0) #\.))
-           btr)
-          ; recursive step
-          (else
-           (normalized-btr (substring btr 1))
-          )
-          )
+    (if (or (string=? btr ".")
+            (not (char=? (string-ref btr 0) #\.))
+            )
+        btr
+        (normalized-btr (substring btr 1))
+        )
     ))
 
 (define btr-digit-sum                    ; val:     carattere +/./-
