@@ -73,7 +73,7 @@
     ))
 
 (define bin-rep->number  ; val: binary number's decimal expansion in radix 10
-  (lambda (bin)          ; bin: binary digits string possibly with [+, -, .] chars
+  (lambda (bin)          ; bin: binary digits non-empty string possibly with [+, -, .] chars
     (let ((sign (string-ref bin 0))
           (mod (substring bin 1))
           )
@@ -103,7 +103,7 @@
   (lambda (d-set digit)   ; d-set: string of arbitrary digits sorted in ascending order
                           ; digit: character contained in d-set
     ; base case
-    (if (char=? digit (string-ref d-set 0)) ; must use char type to avoid index error if string-legth is 1
+    (if (char=? digit (string-ref d-set 0))
         0
         ; recursive step
         (add1
@@ -161,7 +161,7 @@
 
 (define rep->number        ; val: decimal expansion of a numeral string in radix n with arbitrary digits set
   (lambda (d-set numeral)  ; d-set: string of arbitrary digits sorted in ascending order
-                           ; numeral: string representation of number in radix n with d-set's digits and possibly with [+, -, .] chars
+                           ; numeral: non-empty string representation of number in radix n with d-set's digits and possibly with [+, -, .] chars
     (let ((sign (string-ref numeral 0))
           (mod (substring numeral 1))
           )
