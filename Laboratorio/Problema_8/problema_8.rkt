@@ -1,24 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname problema_8) (read-case-sensitive #t) (teachpacks ((lib "drawings.ss" "installed-teachpacks") (lib "hanoi.ss" "installed-teachpacks"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "drawings.ss" "installed-teachpacks") (lib "hanoi.ss" "installed-teachpacks")) #f)))
-;; given procedures
-
-(define hanoi-moves     ; val: list of couples, each representing from_peg and to_peg of an optimal move
-  (lambda (n)           ; n: disks number, positive
-    (hanoi-rec n 1 2 3)
-    ))
-
-(define hanoi-rec   ; val: list of couples
-  (lambda (n s d t) ; n: disks number, s: source peg, d: destination peg, t: transition peg
-    (if (= n 1)
-        (list (list s d))
-        (let ((m1 (hanoi-rec (- n 1) s t d))
-              (m2 (hanoi-rec (- n 1) t d s))
-              )
-          (append m1 (cons (list s d) m2))
-          ))
-    ))
-
 ;; task 1
 
 (define locate-bigger                    ; val: list of integer couples, first number representing the peg and second representing number of disks in stack at a given k move
@@ -66,14 +48,13 @@
 
 ;; task 2
 
-(define draw-bigger                                                  ; val: image, picture of n disks stacked on pegs at a given k move 
-  (lambda (n k s d t s-num d-num t-num disks-to-place placed-disks)  ; n: positive integer, total number of disks
-                                                                     ; k: non-negative integer, move number
-                                                                     ; s, d, t: integer representing source, destination, and transition peg
-                                                                     ; s-num, d-num, t-num: non-negative integers representings disks stacked on s, d, t pegs. Will be used
-                                                                     ;                      to keep track of disks height on pegs
-                                                                     ; disks-to-place: non-negative integer, number of disks yet to be drawn
-                                                                     ; placed-disks: non-negative integer, number of disks already drawn
+(define draw-bigger                                     ; val: image, picture of n disks stacked on pegs at a given k move 
+  (lambda (n k s d t s-num d-num t-num disks-to-place)  ; n: positive integer, total number of disks
+                                                        ; k: non-negative integer, move number
+                                                        ; s, d, t: integer representing source, destination, and transition peg
+                                                        ; s-num, d-num, t-num: non-negative integers representings disks stacked on s, d, t pegs. Will be used
+                                                        ;                      to keep track of disks height on pegs
+                                                        ; disks-to-place: non-negative integer, number of disks yet to be drawn
     (let ((half (expt 2 (sub1 disks-to-place))))  ; we can't use n as counter because n must be constant in order to make disk-image work without raising exception
       (cond
         ; base case; sadly can't be 0 because disk-image would raise exception
@@ -85,12 +66,12 @@
          )
         ; recursive steps, at each recursion only the biggest disk is drawn
         ((< k half)
-         (above (draw-bigger n k s t d (add1 s-num) t-num d-num (sub1 disks-to-place) (add1 placed-disks))
+         (above (draw-bigger n k s t d (add1 s-num) t-num d-num (sub1 disks-to-place))
                 (disk-image disks-to-place n s s-num)
                 )
          )
         (else
-         (above (draw-bigger n (- k half) t d s t-num (add1 d-num) s-num (sub1 disks-to-place) (add1 placed-disks))
+         (above (draw-bigger n (- k half) t d s t-num (add1 d-num) s-num (sub1 disks-to-place))
                 (disk-image disks-to-place n d d-num)
                 )
          )
@@ -100,7 +81,7 @@
 
 (define hanoi-picture                         ; val: image with background
   (lambda (n k)                               ; n: positive integer, total number of disks; k: non-negative integer, move number
-    (above (draw-bigger n k 1 2 3 0 0 0 n 0)
+    (above (draw-bigger n k 1 2 3 0 0 0 n)
            (towers-background n)
            )
     ))
